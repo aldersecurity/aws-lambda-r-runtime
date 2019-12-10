@@ -11,11 +11,11 @@ else
 fi
 
 BASE_DIR=$(pwd)
-BUILD_DIR=${BASE_DIR}/build/
-R_DIR=/opt/R/
+BUILD_DIR=${BASE_DIR}/build
+R_DIR=/opt/R
 
-rm -rf ${BUILD_DIR}
+# rm -rf ${BUILD_DIR}
 
 mkdir -p ${BUILD_DIR}/bin/
 docker run -v ${BUILD_DIR}/bin/:/var/r lambda-r:build-${VERSION}
-sudo chown -R $(whoami):$(whoami) ${BUILD_DIR}/bin/
+sudo chown -R $(whoami):staff ${BUILD_DIR}/bin/

@@ -24,7 +24,10 @@ RUN ./configure --prefix=${R_DIR} --exec-prefix=${R_DIR} --with-libpth-prefix=/o
     cp /usr/lib64/libgomp.so.1 lib/ && \
     cp /usr/lib64/libquadmath.so.0 lib/ && \
     cp /usr/lib64/libstdc++.so.6 lib/
-RUN yum install -q -y openssl-devel libxml2-devel && \
-    ./bin/Rscript -e 'install.packages(c("httr", "aws.s3", "logging"), repos="http://cran.r-project.org")'
-CMD mkdir -p /var/r/ && \
-    cp -r bin/ lib/ etc/ library/ doc/ modules/ share/ /var/r/
+    
+RUN yum install -q -y openssl-devel libxml2-devel
+RUN ./bin/Rscript -e 'install.packages(c("httr", "aws.s3", "logging"), repos="http://cran.r-project.org")'
+RUN ./bin/Rscript -e 'install.packages("awspack", repos="http://cran.r-project.org");install.packages("remotes", repos="http://cran.r-project.org");library("remotes");install_github(repo="domoinc-r/DomoR")'
+
+CMD mkdir -p /var/r/ 
+CMD cp -r bin/ lib/ etc/ library/ doc/ modules/ share/ /var/r/
