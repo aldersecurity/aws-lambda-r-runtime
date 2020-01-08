@@ -16,6 +16,7 @@ function releaseToRegion {
     bucket="aws-lambda-r-runtime.$region"
     echo "publishing layers to region $region"
     sam package \
+        --profile=alder \
         --output-template-file packaged.yaml \
         --s3-bucket ${bucket} \
         --s3-prefix R-${version} \
@@ -23,31 +24,33 @@ function releaseToRegion {
     version_="${version//\./_}"
     stack_name=r-${version//\./-}
     sam deploy \
+        --profile=alder \
         --template-file packaged.yaml \
         --stack-name ${stack_name} \
         --parameter-overrides Version=${version_} \
         --no-fail-on-empty-changeset \
         --region ${region}
-    layers=(runtime recommended awspack)
+    layers=(runtime recommended awspack alder)
     echo "Published layers:"
     aws cloudformation describe-stack-resources \
+        --profile=alder \
         --stack-name ${stack_name} \
         --query "StackResources[?ResourceType=='AWS::Lambda::LayerVersion'].PhysicalResourceId" \
         --region ${region}
 }
 
 regions=(
-          us-east-1 us-east-2
-          us-west-1 us-west-2
-          ap-south-1
-          ap-northeast-1 ap-northeast-2
-          ap-southeast-1 ap-southeast-2
-          ca-central-1
-          eu-central-1
-          eu-north-1
-          eu-west-1 eu-west-2 eu-west-3
-          sa-east-1
-        )
+    us-east-1 us-east-2
+    us-west-1 us-west-2
+    ap-south-1
+    ap-northeast-1 ap-northeast-2
+    ap-southeast-1 ap-southeast-2
+    ca-central-1
+    eu-central-1
+    eu-north-1
+    eu-west-1 eu-west-2 eu-west-3
+    sa-east-1
+)
 
 for region in "${regions[@]}"
 do
