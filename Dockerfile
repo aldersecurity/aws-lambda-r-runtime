@@ -29,5 +29,4 @@ RUN yum install -q -y openssl-devel libxml2-devel
 RUN ./bin/Rscript -e 'install.packages(c("httr", "aws.s3", "logging", "awspack", "remotes", "plyr", "dplyr"), repos="http://cran.r-project.org")'
 RUN ./bin/Rscript -e 'library("remotes");install_github(repo="domoinc-r/DomoR")'
 
-CMD mkdir -p /var/r/ 
-CMD cp -r bin/ lib/ etc/ library/ doc/ modules/ share/ /var/r/
+CMD mkdir -p /var/r/ && cp -r bin/ lib/ etc/ library/ doc/ modules/ share/ /var/r/
