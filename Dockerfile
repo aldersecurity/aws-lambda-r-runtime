@@ -28,5 +28,7 @@ RUN ./configure --prefix=${R_DIR} --exec-prefix=${R_DIR} --with-libpth-prefix=/o
 RUN yum install -q -y openssl-devel libxml2-devel
 RUN ./bin/Rscript -e 'install.packages(c("httr", "aws.s3", "logging", "awspack", "remotes", "plyr", "dplyr"), repos="http://cran.r-project.org")'
 RUN ./bin/Rscript -e 'library("remotes");install_github(repo="domoinc-r/DomoR")'
+RUN ./bin/Rscript -e 'install.packages(c("sqldf"), repos="http://cran.r-project.org")'
+
 
 CMD mkdir -p /var/r/ && cp -r bin/ lib/ etc/ library/ doc/ modules/ share/ /var/r/

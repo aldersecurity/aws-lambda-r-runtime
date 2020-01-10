@@ -11,7 +11,7 @@ cd ${BUILD_DIR}/layer
 cp -r ${BASE_DIR}/../r/build/bin/* R.orig/
 mkdir -p R/library
 
-recommended=(boot class cluster codetools foreign KernSmooth lattice MASS Matrix mgcv nlme nnet rpart spatial survival remotes DomoR plyr dplyr)
+recommended=(boot DomoR dplyr rlang assertthat glue magrittr pkgconfig methods R6 tibble pillar crayon vctrs tidyselect utils purrr pryr codetools stringr stringi readr hms zeallot backports)
 for package in "${recommended[@]}"
 do
    mv R.orig/library/${package}/ R/library/${package}/
